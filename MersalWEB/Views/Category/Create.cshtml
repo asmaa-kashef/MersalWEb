@@ -1,0 +1,92 @@
+﻿@model MersalWEB.Models.CatVm
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Category</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item">
+                            <a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Add Category</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body p-4">
+
+                <br />
+                <form asp-action="Create" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-4">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="category.CategoryName" class="control-label"></label>
+                                <input asp-for="category.CategoryName" class="form-control" />
+                                <span asp-validation-for="category.CategoryName" class="text-danger"></span>
+                            </div>
+                            <br />
+                            <div class="form-group">
+                                <label asp-for="category.CategoryDescription" class="control-label"></label>
+                                <input asp-for="category.CategoryDescription" class="form-control" />
+                                <span asp-validation-for="category.CategoryDescription" class="text-danger"></span>
+                            </div>
+
+
+                            <br />
+                        </div>
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-5">
+
+
+                            <br />
+
+                            <div class="form-group">
+                                <label asp-for="CatImgVm" class="form-label">Photo</label>
+                                <input class="form-control" asp-for="CatImgVm" type="file" accept=".xlsx,.xls,image/*,.doc,audio/*,.docx,video/*,.ppt,.pptx,.txt,.pdf">
+                            </div>
+                            <br />
+
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                                <a asp-action="Index" class="btn btn-success">Back</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+
+    <!--plugins-->
+
+
+
+
+
+   
+

@@ -1,0 +1,82 @@
+﻿@model MersalWEB.Models.CatVm
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Discount</h4>
+<hr />
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="card">
+            <div class="card-body p-4">
+                <h5 class="card-title">Edit Category</h5>
+                <br />
+                <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="category.CategoryId" />
+                    <div class="row">
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-4">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="category.CategoryName" class="control-label"></label>
+                                <input asp-for="category.CategoryName" class="form-control" />
+                                <span asp-validation-for="category.CategoryName" class="text-danger"></span>
+                            </div>
+
+                            <br />
+                            <div class="form-group">
+                                <label asp-for="category.CategoryDescription" class="control-label"></label>
+                                <input asp-for="category.CategoryDescription" class="form-control" />
+                                <span asp-validation-for="category.CategoryDescription" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-5">
+
+
+                            <br />
+
+                            <div class="form-group">
+
+                                <img src="~/admin/assets/images/@Model.category.Photo"
+                                     class="rounded-square"
+                                     width="200px" height="150px"
+                                     style="border:1px"
+                                     asp-append-version="true" accept="image/*" />
+
+                                <div id="chooseFile"><input class="form-control" asp-for="CatImgVm" type="file" accept=".xlsx,.xls,image/*,.doc,audio/*,.docx,video/*,.ppt,.pptx,.txt,.pdf"></div>
+                            </div>
+                            <br />
+
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                                <a asp-action="Index" class="btn btn-success">Back</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    }
+
+    <!--plugins-->

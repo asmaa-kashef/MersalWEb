@@ -1,0 +1,65 @@
+using System.Configuration;
+using MersalWEB.Data;
+using MersalWEB.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.EntityFrameworkCore;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(connectionString));
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddSession();
+
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+
+builder.Services.AddAuthentication()
+               .AddGoogle(options =>
+               {
+                   IConfigurationSection googleAuthSection =builder.Configuration.GetSection("Authentication:Google");
+
+                   options.ClientId = googleAuthSection["ClientId"];
+                   options.ClientSecret = googleAuthSection["ClientSecret"];
+               })
+               .AddFacebook(facebookOptions =>
+               {
+                   facebookOptions.AppId = builder.Configuration["Authentication:Facebook:AppId"];
+                   facebookOptions.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"];
+                             });
+
+builder.Services.AddControllersWithViews();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseMigrationsEndPoint();
+}
+else
+{
+    app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapRazorPages();
+app.UseSession();
+app.Run();

@@ -1,0 +1,54 @@
+﻿@model MersalWEB.Models.IndexVm
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Order</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+                @foreach (var item in Model.Orders)
+                {
+                 <div class="form-group">
+                 <label asp-for="@item.Price" class="control-label"></label>
+                    <input asp-for="@item.Price" class="form-control" />
+                    <span asp-validation-for="@item.Price" class="text-danger"></span>
+                </div>
+                 <div class="form-group">
+                <label asp-for="@item.TotalPrice" class="control-label"></label>
+                    <input asp-for="@item.TotalPrice" class="form-control" />
+                <span asp-validation-for="@item.TotalPrice" class="text-danger"></span>
+            </div>
+                    
+                }
+               
+           
+            <div class="form-group">
+                <label asp-for="OrderDetails" asp-items="Model.OrderDetailId" class="control-label"></label>
+                <select asp-for="OrderDetails" class="form-control" asp-items="@(new SelectList(Model.OrderDetails,"OrderDetailId","Name"))"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="products" asp-items="Model.ProductId" class="control-label"></label>
+                <select asp-for="products" class="form-control" asp-items="@(new SelectList(Model.products,"ProductId","Name"))"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
